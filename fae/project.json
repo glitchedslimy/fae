@@ -1,0 +1,36 @@
+{
+  "name": "Fae",
+  "version": "0.1.0",
+  "root": "fae",
+  "sourceRoot": "fae/src",
+  "projectType": "application",
+  "generators": {},
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec nx run Fae:serve --configuration=dev"
+      },
+      "configurations": {
+        "dev": {
+          "command": "tsx --tsconfig ./fae/tsconfig.json ./fae/src/index.ts"
+        },
+        "production": {
+          "command": "pnpm exec nx run Fae:build --prod && tsx --tsconfig ./fae/tsconfig.json ./fae/src/index.ts"
+        }
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint --fix"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write \"./fae/src/**/*.{ts,js}\""
+      }
+    }
+  }
+}

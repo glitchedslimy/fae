@@ -1,0 +1,29 @@
+{
+    "name": "SpectrumCommands",
+    "version": "0.1.0",
+    "root": "spectrum-commands",
+    "projectRoot": "spectrum-commands/src",
+    "projectType": "library",
+    "generators": {},
+    "targets": {
+        "build": {
+            "tsconfig": "spectrum-commands/tsconfig.json",
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": "tsc -p ./packages/spectrum-commands/tsconfig.json"
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": "eslint --fix"
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "prettier --write \"./packages/**/src/**/*.{ts,js}\""
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./fae"
+  },
+  "include": [
+    "./src/**/*",
+    "../shared/src/**/*",
+    "../packages/spectrum-commands/src/**/*"
+  ]
+}
