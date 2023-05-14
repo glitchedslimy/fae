@@ -1,7 +1,9 @@
 import { ActivityType, Client, ClientOptions, Collection } from 'discord.js'
 import { TCommand } from '../../types'
 import { IBotActivity } from '../../interfaces'
-import { Logger, loadCommands, loadEvents } from '../../utils'
+import { logger, loadCommands, loadEvents } from '../../utils'
+import { MongoConn } from '../../db/conn/MongoConn'
+import testModel from '../../db/models/testModel'
 
 export class SpectrumClient extends Client {
   readonly botToken: string
@@ -31,7 +33,7 @@ export class SpectrumClient extends Client {
 
   async start() {
     this.on('ready', async () => {
-      Logger.info(`🤖 Starting ${this.botName}...`, {
+      logger.info(`🤖 Starting ${this.botName}...`, {
         service: 'Client Structure',
       })
       this.user?.setActivity({
@@ -39,7 +41,7 @@ export class SpectrumClient extends Client {
         type: this.activity?.type ?? ActivityType.Playing,
       })
       await this.loadCommands()
-      Logger.info(`🤓☝️ ${this.botName} is up and ready!`, {
+      logger.info(`🎉 ${this.botName} is up and ready!`, {
         service: 'Client Structure',
       })
     })

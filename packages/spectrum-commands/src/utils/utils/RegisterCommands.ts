@@ -1,22 +1,22 @@
-import { SlimedClient } from '../../structures'
+import { SpectrumClient } from '../../structures'
 import { LoggerServices } from '../enums/LoggerServices'
-import { Logger } from './InternalLogger'
+import { logger } from './InternalLogger'
 
 export async function registerCommands(
-  client: SlimedClient,
+  client: SpectrumClient,
   slashCommands: any[]
 ) {
-  Logger.info('📦 Registering commands...', {
+  logger.info('📦 Registering commands...', {
     service: LoggerServices.Commands,
   })
   if (client.application) {
     try {
       await client.application.commands.set(slashCommands)
-      Logger.info('📦 Registered commands!', {
+      logger.info('📦 Registered commands!', {
         service: LoggerServices.Commands,
       })
     } catch (err) {
-      Logger.error('❌ Error registering commands.', {
+      logger.error('❌ Error registering commands.', {
         service: LoggerServices.Commands,
       })
     }
