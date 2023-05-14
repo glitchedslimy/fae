@@ -16,7 +16,7 @@
         "lint": {
             "executor": "nx:run-commands",
             "options": {
-                "commands": "eslint --fix"
+                "commands": ["eslint --fix"]
             }
         },
         "format": {
