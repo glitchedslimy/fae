@@ -1,16 +1,22 @@
 import glob from 'fast-glob'
 import { existsSync } from 'fs'
+import path from 'path'
 
 export async function loadAllFiles(dirName: string): Promise<string[]> {
-  const botFolder = `${process.cwd().replace(/\\/g, '/')}/fae`
-  const internalFiles = await glob(
+  const botFolder = path.join(process.cwd(), 'fae')
+  const internalFilesPromise = glob(
     `${__dirname}/../../${dirName}/events/**/*.{js,ts}`
   )
-  const externalFiles = await glob(
+  const externalFilesPromise = glob(
     existsSync(botFolder)
-      ? `${process.cwd().replace(/\\/g, '/')}/fae/src/${dirName}/**/*.{js,ts}`
-      : `${process.cwd().replace(/\\/g, '/')}/src/${dirName}/**/*.{js,ts}`
+      ? path.join(process.cwd(), 'fae', 'src', dirName, '**', '*.{js,ts}')
+      : path.join(process.cwd(), 'src', dirName, '**', '*.{js,ts}')
   )
+
+  const [internalFiles, externalFiles] = await Promise.all([
+    internalFilesPromise,
+    externalFilesPromise,
+  ])
 
   const allFiles = [...internalFiles, ...externalFiles]
 

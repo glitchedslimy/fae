@@ -11,15 +11,18 @@ export async function loadEvents(client: SpectrumClient) {
   logger.info('🎭 Loading events...', { service: LoggerServices.Events })
   const eventFiles = await loadAllFiles('events')
 
-  eventFiles.forEach((file) => {
-    const event: IEvent = require(file)
+  await Promise.all(
+    eventFiles.map(async (file) => {
+      const event: IEvent = require(file)
 
-    const run = (...args: any) => event.run(...args, client)
+      const run = (...args: any) => event.run(...args, client)
 
-    client.events.set(event.event, event.run)
+      client.events.set(event.event, event.run)
 
-    registerEvent(client, event, run)
-  })
+      await registerEvent(client, event, run)
+    })
+  )
+
   logger.info(`🎭 Loaded ${eventFiles.length} events!`, {
     service: LoggerServices.Events,
   })
@@ -33,20 +36,23 @@ export async function loadCommands(client: SpectrumClient) {
   const slashCommands: any[] = []
   const commandFiles = await loadAllFiles('commands')
 
-  commandFiles.forEach((file) => {
-    const command = require(file)
+  await Promise.all(
+    commandFiles.map(async (file) => {
+      const command = require(file)
 
-    if (command.subCommand) {
-      return client.subCommands.set(command.subCommand, command)
-    }
+      if (command.subCommand) {
+        return client.subCommands.set(command.subCommand, command)
+      }
 
-    if (!command.name) {
-      return
-    }
+      if (!command.name) {
+        return
+      }
 
-    client.commands.set(command.name, command)
-    slashCommands.push(command)
-  })
+      client.commands.set(command.name, command)
+      slashCommands.push(command)
+    })
+  )
+
   logger.info(`📦 Loaded ${commandFiles.length} commands!`, {
     service: LoggerServices.Commands,
   })

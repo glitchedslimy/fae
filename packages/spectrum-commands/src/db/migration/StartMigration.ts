@@ -10,7 +10,11 @@ export async function startMigration() {
     logger.info('🚀 Starting migration...', { service: 'Migration' })
     await MongoConn()
     await languageModel.createCollection()
-  } catch (error: any) {
-    logger.error(error, { service: 'Migration' })
+  } catch (err) {
+    logger.error('🚨 Something went wrong on the migration', {
+      service: 'Migration',
+      error: err,
+    })
+    throw err
   }
 }
