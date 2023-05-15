@@ -7,11 +7,28 @@ export async function loadAllFiles(dirName: string): Promise<string[]> {
   const internalFilesPromise = glob(
     `${__dirname}/../../${dirName}/events/**/*.{js,ts}`
   )
-  const externalFilesPromise = glob(
-    existsSync(botFolder)
-      ? path.join(process.cwd(), 'fae', 'src', dirName, '**', '*.{js,ts}')
-      : path.join(process.cwd(), 'src', dirName, '**', '*.{js,ts}')
-  )
+  let externalFilesPromise
+  if (process.env.NODE_ENV === 'production') {
+    externalFilesPromise = glob(
+      existsSync(botFolder)
+        ? path.join(
+            process.cwd(),
+            'dist',
+            'fae',
+            'src',
+            dirName,
+            '**',
+            '*.{js,ts}'
+          )
+        : path.join(process.cwd(), 'dist', 'src', dirName, '**', '*.{js,ts}')
+    )
+  } else {
+    externalFilesPromise = glob(
+      existsSync(botFolder)
+        ? path.join(process.cwd(), 'fae', 'src', dirName, '**', '*.{js,ts}')
+        : path.join(process.cwd(), 'src', dirName, '**', '*.{js,ts}')
+    )
+  }
 
   const [internalFiles, externalFiles] = await Promise.all([
     internalFilesPromise,

@@ -14,6 +14,12 @@ const convictConfig: convict.Config<IConfig> = convict({
     default: '',
     env: 'GUILD_ID',
   },
+  env: {
+    doc: 'The environment of the bot',
+    format: ['production', 'development', 'test'],
+    default: 'development',
+    env: 'NODE_ENV',
+  },
 })
 
 convictConfig.validate({ allowed: 'strict' })

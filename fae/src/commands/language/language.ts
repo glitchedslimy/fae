@@ -3,6 +3,7 @@ import { ApplicationCommandOptionType } from 'discord.js'
 
 const lang: ISpectrumCommand = {
   name: 'lang',
+  defaultMemberPermissions: ['Administrator'],
   description: 'Change the language of the bot',
   options: [
     {
@@ -22,11 +23,11 @@ const lang: ISpectrumCommand = {
           type: ApplicationCommandOptionType.String,
           choices: [
             {
-              name: 'English',
+              name: 'English (Inglés)',
               value: 'en',
             },
             {
-              name: 'Spanish',
+              name: 'Spanish (Español)',
               value: 'es',
             },
           ],

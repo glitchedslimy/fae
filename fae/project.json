@@ -6,6 +6,12 @@
   "projectType": "application",
   "generators": {},
   "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p ./fae/tsconfig.json && tsc-alias -p ./fae/tsconfig.json"
+      }
+    },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
@@ -16,7 +22,7 @@
           "command": "tsx --tsconfig ./fae/tsconfig.json ./fae/src/index.ts"
         },
         "production": {
-          "command": "pnpm exec nx run Fae:build --prod && tsx --tsconfig ./fae/tsconfig.json ./fae/src/index.ts"
+          "command": "pnpm exec nx run Fae:build --prod && node ./fae/dist/fae/src/index.js"
         }
       }
     },

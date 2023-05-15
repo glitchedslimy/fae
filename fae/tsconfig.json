@@ -1,7 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./fae"
+    "outDir": "./dist",
+    "declaration": false,
+    "module": "CommonJS",
   },
   "include": [
     "./src/**/*",

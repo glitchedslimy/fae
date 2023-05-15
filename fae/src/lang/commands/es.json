@@ -1,7 +1,17 @@
 {
     "command": {
         "ping": {
-            "response": "Pues Pong!"
+            "latency": "Latencia",
+            "pong": "Pong!",
+            "apiLatency": "Latencia en la API"
+        },
+        "lang": {
+            "set": {
+                "text": "Lenguaje establecido a"
+            },
+            "get": {
+                "text": "Lenguaje actual"
+            }
         }
     }
 }
